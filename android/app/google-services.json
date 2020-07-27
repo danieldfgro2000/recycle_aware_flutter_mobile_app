@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "674459023159",
+    "firebase_url": "https://recycleawareflutter.firebaseio.com",
+    "project_id": "recycleawareflutter",
+    "storage_bucket": "recycleawareflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:674459023159:android:17286570e670b338374cb2",
+        "android_client_info": {
+          "package_name": "en.recycle_aware_flutter_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "674459023159-il6naqhjqil4p9qios6eql6miu3i3v1d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "en.recycle_aware_flutter_app",
+            "certificate_hash": "cb6fc2a0587e3e978311fc8f35e09bcd45a24819"
+          }
+        },
+        {
+          "client_id": "674459023159-h4c9bsri2bg2jpadjlrkvk9b3bbc0n4c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwka8yxjAMU337zHn8v_M3hiiru_QuGpU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "674459023159-h4c9bsri2bg2jpadjlrkvk9b3bbc0n4c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
