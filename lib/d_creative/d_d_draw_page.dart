@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_login/a_b_home_page.dart';
+import '../b_info/b_a_main_page.dart';
+import '../c_home/c_a_main_page.dart';
 
 
 class DrawPage extends StatefulWidget {

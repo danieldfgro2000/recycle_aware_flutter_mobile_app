@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_c_t2s_page.dart';
+import '../d_creative/d_c_t2s_page.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 

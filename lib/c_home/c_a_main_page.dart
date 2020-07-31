@@ -2,11 +2,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_login/a_a_login_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_b_services/a_sign_in.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/c_home/c_b_creative_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/c_home/c_d_order_page.dart';
+import '../a_login/a_a_login_page.dart';
+import '../a_b_services/a_sign_in.dart';
+import '../d_creative/d_a_main_page.dart';
+import '../b_info/b_a_main_page.dart';
+import '../f_order/f_a_main_page.dart';
 
 
 class FirstScreen extends StatefulWidget {

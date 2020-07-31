@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_c_t2s_page.dart';
+import '../d_creative/d_c_t2s_page.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 
@@ -23,19 +23,19 @@ The navigation delegate is set to block navigation to the youtube website.
 ''';
 
 
-class T2sWebView3dpPage extends StatefulWidget {
+class T2sWebViewcncPage extends StatefulWidget {
   @override
-  _T2sWebView3dpPageState createState() => _T2sWebView3dpPageState();
+  _T2sWebViewcncPageState createState() => _T2sWebViewcncPageState();
 }
 
-class _T2sWebView3dpPageState extends State<T2sWebView3dpPage> {
+class _T2sWebViewcncPageState extends State<T2sWebViewcncPage> {
   final Completer<WebViewController> _controller =
   Completer<WebViewController>();
 
   @override
 
   Widget build(BuildContext context) {
-    String webFormURL = 'https://www.relyon-plasma.com/plasma-technology-in-3d-printing/?lang=en';
+    String webFormURL = 'https://www.nordic-parts.dk/vi-tilbyder/';
     final controller = ScrollController();
     return Scaffold(
       appBar: PreferredSize(

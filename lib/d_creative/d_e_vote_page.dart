@@ -5,9 +5,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_login/a_b_home_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_b_services/a_sign_in.dart';
+import '../b_info/b_a_main_page.dart';
+import '../c_home/c_a_main_page.dart';
+import '../a_b_services/a_sign_in.dart';
 
 
 class VotePage extends StatefulWidget {

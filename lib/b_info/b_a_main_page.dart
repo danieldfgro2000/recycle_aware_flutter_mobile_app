@@ -1,9 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_b_why_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_c_what_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_c_map_page.dart';
+import '../b_info/b_b_why_page.dart';
+import '../b_info/b_c_what_page.dart';
+import '../b_info/b_c_map_page.dart';
 
 class InfoPage extends StatefulWidget {
   @override

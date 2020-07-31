@@ -45,11 +45,6 @@ const String _markdownData = """
 """;
 
 
-
-
-
-
-
 class WhyPage extends StatefulWidget {
   @override
   _WhyPageState createState() => _WhyPageState();
