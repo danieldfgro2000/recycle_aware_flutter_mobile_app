@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 
 import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
-import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/c_home/c_home_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_login/a_b_home_page.dart';
 import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_b_write_page.dart';
 
 
@@ -21,7 +21,7 @@ class _TestPageState extends State<TestPage> {
 
   var defaultURL = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
   String avatarImage = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
-  String PrintedFairing = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
+  String printedFairing = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
   String plasticGear = 'https://www.mootio-components.com/imgprod/fotosprod/en/plastic-gear-011816-foto1.jpg';
 
 
@@ -162,7 +162,7 @@ class _TestPageState extends State<TestPage> {
                             OutlineButton(
                               onPressed: () {
                                 setState(() {
-                                  avatarImage = PrintedFairing;
+                                  avatarImage = printedFairing;
                                 });
 
                                 print('3d printed fairing URL: $avatarImage');
