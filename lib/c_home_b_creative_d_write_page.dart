@@ -212,11 +212,11 @@ class _WritePageState extends State<WritePage> {
               ]),
         ),
 
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
+        body:Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 
+          children:  <Widget>[
             SizedBox(height: 5),
 //                        Write down yo Idea
             Flexible(
@@ -285,11 +285,10 @@ class _WritePageState extends State<WritePage> {
                 },
               ),
             ),
-            MyCustomForm()
 
+           MyCustomForm()
 
           ],
-
         ),
 
       floatingActionButton: FloatingActionButton(
