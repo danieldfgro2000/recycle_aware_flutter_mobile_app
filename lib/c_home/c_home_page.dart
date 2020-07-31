@@ -2,12 +2,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:recycle_aware_flutter_app/b_login_page.dart';
-import 'package:recycle_aware_flutter_app/a_sign_in.dart';
-import 'package:recycle_aware_flutter_app/c_home_b_creative_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/a_info_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_c_vote_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_d_useful_a_main_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_login/a_login_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_b_services/a_sign_in.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_a_main_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_e_vote_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/e_connect/e_a_main_page.dart';
 
 
 class FirstScreen extends StatefulWidget {
@@ -108,42 +108,7 @@ class _FirstScreenState extends State<FirstScreen> {
                           ),
                         ),
                         SizedBox(height: 20),
-//                        Vote
-                        OutlineButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context){
-                                  return VotePage();},),);
-                          },
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                          highlightElevation: 1,
-                          borderSide: BorderSide(color: Colors.grey),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    'Vote ',
-                                    style: TextStyle(
-                                      fontSize: 40,
-                                      color: Colors.teal,),),),
-                                CircleAvatar(
-                                  backgroundImage: AssetImage("assets/images/vote_round.png"),
-                                  radius: 50,
-                                  backgroundColor: Colors.transparent,),
-
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 20),
-//                        Watch
+//                        Connect
                         OutlineButton(
                           onPressed: () {
                             Navigator.of(context).push(
@@ -164,7 +129,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    'Useful',
+                                    'Connect',
                                     style: TextStyle(
                                       fontSize: 40,
                                       color: Colors.teal,),),),
@@ -177,7 +142,6 @@ class _FirstScreenState extends State<FirstScreen> {
                             ),
                           ),
                         ),
-
                        SizedBox(height: 20),
 //                      Sign OUT
                        OutlineButton(

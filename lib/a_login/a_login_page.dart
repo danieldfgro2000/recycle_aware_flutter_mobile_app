@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:recycle_aware_flutter_app/a_sign_in.dart';
-import 'package:recycle_aware_flutter_app/c_home_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/a_info_a_main_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/a_b_services/a_sign_in.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/c_home/c_home_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
 
 
 class LoginPage extends StatefulWidget {

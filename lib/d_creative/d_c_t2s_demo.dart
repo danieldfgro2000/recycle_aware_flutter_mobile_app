@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recycle_aware_flutter_app/c_home_b_creative_c_t2s_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_c_t2s_page.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:recycle_aware_flutter_app/c_home_d_useful_b_draw_t2s_webview_3dprint.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/e_connect/e_b_webview_plasma.dart';
 
 
 const String kNavigationExamplePage = '''
@@ -24,19 +24,19 @@ The navigation delegate is set to block navigation to the youtube website.
 ''';
 
 
-class T2sWebViewlaserPage extends StatefulWidget {
+class T2sWebViewdemoPage extends StatefulWidget {
   @override
-  _T2sWebViewlaserPageState createState() => _T2sWebViewlaserPageState();
+  _T2sWebViewdemoPageState createState() => _T2sWebViewdemoPageState();
 }
 
-class _T2sWebViewlaserPageState extends State<T2sWebViewlaserPage> {
+class _T2sWebViewdemoPageState extends State<T2sWebViewdemoPage> {
   final Completer<WebViewController> _controller =
   Completer<WebViewController>();
 
   @override
 
   Widget build(BuildContext context) {
-    String webFormURL = 'https://www.xometry.com/plastic-3d-printing';
+    String webFormURL = 'https://magenta.tensorflow.org/assets/sketch_rnn_demo/index.html';
     final controller = ScrollController();
     return Scaffold(
       appBar: PreferredSize(
@@ -62,7 +62,7 @@ class _T2sWebViewlaserPageState extends State<T2sWebViewlaserPage> {
 
           initialUrl: webFormURL,
 
-          javascriptMode: JavascriptMode.disabled,
+          javascriptMode: JavascriptMode.unrestricted,
           onWebViewCreated: (WebViewController webViewController) {
             _controller.complete(webViewController);
           },

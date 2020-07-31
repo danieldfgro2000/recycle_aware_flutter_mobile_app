@@ -2,33 +2,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/c_home/c_home_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/e_connect/e_b_webview_plasma.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/e_connect/e_c_webview_cnc.dart';
 
-
-import 'package:recycle_aware_flutter_app/a_info_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_b_creative_d_write_page.dart';
-
-
-
-class TestPage extends StatefulWidget {
+String avatarIm;
+String printed3D;
+String plasticG;
+String custom;
+class T2sPage extends StatefulWidget {
   @override
-  _TestPageState createState() => _TestPageState();
+  _T2sPageState createState() => _T2sPageState();
 }
 
-class _TestPageState extends State<TestPage> {
+class _T2sPageState extends State<T2sPage> {
 
   int currentIndex;
 
   var defaultURL = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
   String avatarImage = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
-  String PrintedFairing = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
+  String printedFairing = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
   String plasticGear = 'https://www.mootio-components.com/imgprod/fotosprod/en/plastic-gear-011816-foto1.jpg';
-
-
-
+  String customCNC = 'https://www.nordic-parts.dk/wp-content/uploads/2019/05/referencer_-1.png';
 
 
   @override
+
   Widget build(BuildContext context) {
 
     return Scaffold(
@@ -111,8 +111,20 @@ class _TestPageState extends State<TestPage> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
+                              // ignore: missing_return
                               builder: (context){
-                                return WritePage();},),);
+                                avatarIm = avatarImage;
+
+                                  if (avatarImage == printedFairing) {
+                                    print("3D printing page loading");
+                                            return T2sWebView3dpPage();
+                                      }
+                                  if (avatarImage == customCNC) {
+                                    print("Custom CNC page loading");
+                                    return T2sWebViewcncPage();
+                                  }
+
+                            },),);
                         },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                         highlightElevation: 1,
@@ -126,8 +138,13 @@ class _TestPageState extends State<TestPage> {
 
                               CircleAvatar(
 
-                                backgroundImage: NetworkImage(avatarImage),
+//                                backgroundImage: NetworkImage(avatarImage),
                                 radius: 150,
+                                child: ClipOval(
+                                  child: Image.network(
+                                    avatarImage,
+                                  ),
+                                ),
                                 backgroundColor: Colors.transparent,),
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
@@ -146,7 +163,7 @@ class _TestPageState extends State<TestPage> {
 
                       SizedBox(height: 15),
                       Text(
-                        'KEY words',
+                        'Keywords',
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.teal,),
@@ -162,7 +179,7 @@ class _TestPageState extends State<TestPage> {
                             OutlineButton(
                               onPressed: () {
                                 setState(() {
-                                  avatarImage = PrintedFairing;
+                                  avatarImage = printedFairing;
                                 });
 
                                 print('3d printed fairing URL: $avatarImage');
@@ -222,7 +239,11 @@ class _TestPageState extends State<TestPage> {
                             ),
                             OutlineButton(
                               onPressed: () {
-                                avatarImage = defaultURL;
+                                setState(() {
+                                  avatarImage = customCNC;
+                                });
+
+                                print('custom CNC URL: $avatarImage');
                               },
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                               highlightElevation: 1,
@@ -234,14 +255,10 @@ class _TestPageState extends State<TestPage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
 
-//                                    CircleAvatar(
-//                                      backgroundImage: NetworkImage(PrintedFairing),
-//                                      radius: 25,
-//                                      backgroundColor: Colors.transparent,),
                                     Padding(
                                       padding: const EdgeInsets.all(1.0),
                                       child: Text(
-                                        '3D printed',
+                                        'CNC Custom',
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: Colors.teal,),),),
@@ -369,5 +386,5 @@ class _TestPageState extends State<TestPage> {
     );
   }
 
-}
 
+}

@@ -2,33 +2,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:recycle_aware_flutter_app/a_info_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_d_useful_b_draw_t2s_webview_3dprint.dart';
-import 'package:recycle_aware_flutter_app/c_home_d_useful_b_draw_t2s_webview_customcnc.dart';
 
-String avatarIm;
-String printed3D;
-String plasticG;
-String custom;
-class T2sPage extends StatefulWidget {
+
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/c_home/c_home_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_b_write_page.dart';
+
+
+
+class TestPage extends StatefulWidget {
   @override
-  _T2sPageState createState() => _T2sPageState();
+  _TestPageState createState() => _TestPageState();
 }
 
-class _T2sPageState extends State<T2sPage> {
+class _TestPageState extends State<TestPage> {
 
   int currentIndex;
 
   var defaultURL = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
   String avatarImage = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
-  String printedFairing = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
+  String PrintedFairing = 'https://www.relyon-plasma.com/wp-content/uploads/2019/05/Motorradverkleidung.jpg';
   String plasticGear = 'https://www.mootio-components.com/imgprod/fotosprod/en/plastic-gear-011816-foto1.jpg';
-  String customCNC = 'https://www.nordic-parts.dk/wp-content/uploads/2019/05/referencer_-1.png';
+
+
+
 
 
   @override
-
   Widget build(BuildContext context) {
 
     return Scaffold(
@@ -111,20 +111,8 @@ class _T2sPageState extends State<T2sPage> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              // ignore: missing_return
                               builder: (context){
-                                avatarIm = avatarImage;
-
-                                  if (avatarImage == printedFairing) {
-                                    print("3D printing page loading");
-                                            return T2sWebView3dpPage();
-                                      }
-                                  if (avatarImage == customCNC) {
-                                    print("Custom CNC page loading");
-                                    return T2sWebViewcncPage();
-                                  }
-
-                            },),);
+                                return WritePage();},),);
                         },
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                         highlightElevation: 1,
@@ -138,13 +126,8 @@ class _T2sPageState extends State<T2sPage> {
 
                               CircleAvatar(
 
-//                                backgroundImage: NetworkImage(avatarImage),
+                                backgroundImage: NetworkImage(avatarImage),
                                 radius: 150,
-                                child: ClipOval(
-                                  child: Image.network(
-                                    avatarImage,
-                                  ),
-                                ),
                                 backgroundColor: Colors.transparent,),
                               Padding(
                                 padding: const EdgeInsets.all(5.0),
@@ -163,7 +146,7 @@ class _T2sPageState extends State<T2sPage> {
 
                       SizedBox(height: 15),
                       Text(
-                        'Keywords',
+                        'KEY words',
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.teal,),
@@ -179,7 +162,7 @@ class _T2sPageState extends State<T2sPage> {
                             OutlineButton(
                               onPressed: () {
                                 setState(() {
-                                  avatarImage = printedFairing;
+                                  avatarImage = PrintedFairing;
                                 });
 
                                 print('3d printed fairing URL: $avatarImage');
@@ -239,11 +222,7 @@ class _T2sPageState extends State<T2sPage> {
                             ),
                             OutlineButton(
                               onPressed: () {
-                                setState(() {
-                                  avatarImage = customCNC;
-                                });
-
-                                print('custom CNC URL: $avatarImage');
+                                avatarImage = defaultURL;
                               },
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
                               highlightElevation: 1,
@@ -255,10 +234,14 @@ class _T2sPageState extends State<T2sPage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
 
+//                                    CircleAvatar(
+//                                      backgroundImage: NetworkImage(PrintedFairing),
+//                                      radius: 25,
+//                                      backgroundColor: Colors.transparent,),
                                     Padding(
                                       padding: const EdgeInsets.all(1.0),
                                       child: Text(
-                                        'CNC Custom',
+                                        '3D printed',
                                         style: TextStyle(
                                           fontSize: 15,
                                           color: Colors.teal,),),),
@@ -386,5 +369,5 @@ class _T2sPageState extends State<T2sPage> {
     );
   }
 
-
 }
+

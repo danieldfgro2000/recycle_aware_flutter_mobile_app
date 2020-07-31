@@ -2,13 +2,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:recycle_aware_flutter_app/a_info_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_a_main_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_b_creative_d_write_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_b_creative_c_t2s_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_b_creative_b_draw_page.dart';
-import 'package:recycle_aware_flutter_app/a_a_test_page.dart';
-import 'package:recycle_aware_flutter_app/c_home_b_creative_c_t2s_demo.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/b_info/b_a_main_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/c_home/c_home_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_b_write_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_c_t2s_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_d_draw_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/y_test/a_a_test_page.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_c_t2s_demo.dart';
+import 'file:///C:/Users/dmuncaciu/AndroidStudioProjects/recycle_aware_flutter_app/lib/d_creative/d_e_vote_page.dart';
 
 class CreativePage extends StatefulWidget {
   @override
@@ -163,17 +164,52 @@ class _CreativePageState extends State<CreativePage> {
                         ),
                         SizedBox(height: 20),
 //                        Draw
+//                        OutlineButton(
+//                          onPressed: () {
+//                            Navigator.of(context).push(
+//                              MaterialPageRoute(
+//                                builder: (context){
+//                                  return DrawPage();},),);
+//                          },
+//                          shape: RoundedRectangleBorder(
+//                              borderRadius: BorderRadius.circular(20)),
+//                              highlightElevation: 1,
+//                              borderSide: BorderSide(color: Colors.grey),
+//                          child: Padding(
+//                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+//                            child: Row(
+//                              mainAxisSize: MainAxisSize.max,
+//                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                              children: <Widget>[
+//
+//                                Padding(
+//                                  padding: const EdgeInsets.all(5.0),
+//                                  child: Text(
+//                                    'Draw ',
+//                                    style: TextStyle(
+//                                      fontSize: 20,
+//                                      color: Colors.teal,),),),
+//                                CircleAvatar(
+//                                  backgroundImage: AssetImage("assets/images/eve_round.png"),
+//                                  radius: 50,
+//                                  backgroundColor: Colors.transparent,),
+//
+//                              ],
+//                            ),
+//                          ),
+//                        ),
+//                        SizedBox(height: 20),
+//                        Vote
                         OutlineButton(
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context){
-                                  return DrawPage();},),);
+                                  return VotePage();},),);
                           },
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                              highlightElevation: 1,
-                              borderSide: BorderSide(color: Colors.grey),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          highlightElevation: 1,
+                          borderSide: BorderSide(color: Colors.grey),
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                             child: Row(
@@ -184,12 +220,12 @@ class _CreativePageState extends State<CreativePage> {
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    'Draw ',
+                                    'Vote ',
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.teal,),),),
                                 CircleAvatar(
-                                  backgroundImage: AssetImage("assets/images/eve_round.png"),
+                                  backgroundImage: AssetImage("assets/images/vote_round.png"),
                                   radius: 50,
                                   backgroundColor: Colors.transparent,),
 
@@ -197,9 +233,6 @@ class _CreativePageState extends State<CreativePage> {
                             ),
                           ),
                         ),
-
-
-
                        SizedBox(height: 20),
 
 
