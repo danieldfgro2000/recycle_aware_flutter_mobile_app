@@ -75,7 +75,7 @@ class _InfoPageState extends State<InfoPage> {
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    'Why? ',
+                                    'Why ',
                                     style: TextStyle(
                                       fontSize: 40,
                                       color: Colors.teal,),),),
@@ -111,7 +111,7 @@ class _InfoPageState extends State<InfoPage> {
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    'Where? ',
+                                    'Where ',
                                     style: TextStyle(
                                       fontSize: 40,
                                       color: Colors.teal,),),),
@@ -147,7 +147,7 @@ class _InfoPageState extends State<InfoPage> {
                                 Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    'What? ',
+                                    'What ',
                                     style: TextStyle(
                                       fontSize: 40,
                                       color: Colors.teal,),),),

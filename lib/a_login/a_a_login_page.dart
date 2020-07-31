@@ -14,7 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-        appBar: PreferredSize(
+      appBar: PreferredSize(
             preferredSize: Size.fromHeight(40.0), // here the desired height
             child: AppBar(
                 title: Text('Welcome', textScaleFactor: 1.2,),
@@ -53,8 +53,6 @@ class _LoginPageState extends State<LoginPage> {
 
                 ]),
             ),
-
-
 
       body: Container(
         height: double.infinity,
