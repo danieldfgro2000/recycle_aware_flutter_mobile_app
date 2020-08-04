@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/material.dart';
 
+import '../a_b_services/a_sign_in.dart';
 import '../b_info/b_a_main_page.dart';
 import '../c_home/c_a_main_page.dart';
-import '../a_b_services/a_sign_in.dart';
 
 
 class VotePage extends StatefulWidget {
@@ -60,18 +60,6 @@ class _VotePageState extends State<VotePage> {
     database.setPersistenceCacheSizeBytes(10000000);
 
     _votecountRef.keepSynced(true);
-//    _votecountSubscription = _votecountRef.onValue.listen((Event event) {
-//      setState(() {
-//        _error = null;
-//        _votecountRef = event.snapshot.value ?? 0;
-//      });
-//    }, onError: (Object o) {
-//      final DatabaseError error = o;
-//      setState(() {
-//        _error = error;
-//      });
-//    });
-
     _ideacounterRef.keepSynced(true);
     _ideacounterSubscription = _ideacounterRef.onValue.listen((Event event) {
       setState(() {
@@ -199,17 +187,13 @@ class _VotePageState extends State<VotePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 25),
+          SizedBox(height: 15),
           Flexible(
-
             child: Center(
-
               heightFactor: 1,
               child: _error == null
                   ? Text(
-                'Submited ideas: $_ideacounter idea${_ideacounter == 1 ? '' : 's'}.\n\n'
-
-              )
+                      'Submited ideas: $_ideacounter idea${_ideacounter == 1 ? '' : 's'}.\n\n')
                   : Text(
                 'Error retrieving button tap count:\n${_error.message}',
               ),
@@ -242,11 +226,11 @@ class _VotePageState extends State<VotePage> {
                   child: ListTile(
                     trailing:
                       IconButton(
+                        icon: Icon(Icons.thumb_up),
                         onPressed:
 //                            _voteCounter,
                             () =>
-                            _votecountRef.child(snapshot.key).set(1),
-                        icon: Icon(Icons.thumb_up),
+                            _votecountRef.child(snapshot.key).set(_increment()),
                       ),
 
                     title: Text(

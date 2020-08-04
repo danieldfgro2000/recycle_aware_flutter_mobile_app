@@ -1,20 +1,18 @@
 import 'dart:async';
 
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../b_info/b_a_main_page.dart';
 import '../a_b_services/a_sign_in.dart';
+import '../b_info/b_a_main_page.dart';
 import '../c_home/c_a_main_page.dart';
-
-
 
 class WritePage extends StatefulWidget {
   WritePage({this.app});
+
   final FirebaseApp app;
 
   @override
@@ -22,12 +20,13 @@ class WritePage extends StatefulWidget {
 }
 
 class _WritePageState extends State<WritePage> {
+
   int _ideacounter;
+  int _votecounter;
 
   DatabaseReference _ideacounterRef;
   DatabaseReference _votecounterRef;
   DatabaseReference _messagesRef;
-
 
   StreamSubscription<Event> _ideacounterSubscription;
   StreamSubscription<Event> _messagesSubscription;
@@ -35,27 +34,26 @@ class _WritePageState extends State<WritePage> {
 
   bool _anchorToBottom = false;
 
-
   String _kUserKey = name;
-//  String _kUserValue = 'idea_subscription';
-  String _kVoteKey = 'vote_key';
-  String _kVoteValue = 'vote_value';
+  String _kVoteKey = 'vote_counter';
+  String _kImageKey = 'vote_value';
 
   DatabaseError _error;
 
   @override
   void initState() {
     super.initState();
-
-    _ideacounterRef = FirebaseDatabase.instance.reference().child('idea_counter');
-    _votecounterRef = FirebaseDatabase.instance.reference().child('vote_counter');
-
     final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
 
+    _ideacounterRef =
+        FirebaseDatabase.instance.reference().child('idea_counter');
+    _votecounterRef =
+        FirebaseDatabase.instance.reference().child('vote_counter');
+
     _messagesRef = database.reference().child('ideas');
-                   database.reference().child('counter');
-                   database.reference().child('vote_counter')
-                       .once().then((DataSnapshot snapshot) {
+    database.reference().child('counter');
+    database.reference().child('vote_counter')
+        .once().then((DataSnapshot snapshot) {
       print('Connected to second database and read ${snapshot.value}');
     });
 
@@ -63,19 +61,9 @@ class _WritePageState extends State<WritePage> {
     database.setPersistenceCacheSizeBytes(10000000);
 
     _votecounterRef.keepSynced(true);
-//    _votecounterSubscription = _votecounterRef.onValue.listen((Event event) {
-//      setState(() {
-//        _error = null;
-//        _votecounterRef = event.snapshot.value ?? 0;
-//      });
-//    }, onError: (Object o) {
-//      final DatabaseError error = o;
-//      setState(() {
-//        _error = error;
-//      });
-//    });
-
     _ideacounterRef.keepSynced(true);
+
+
     _ideacounterSubscription = _ideacounterRef.onValue.listen((Event event) {
       setState(() {
         _error = null;
@@ -87,8 +75,24 @@ class _WritePageState extends State<WritePage> {
         _error = error;
       });
     });
+
+    _votecounterSubscription = _votecounterRef.onValue.listen((Event event) {
+      setState(() {
+        _error = null;
+        _votecounter = event.snapshot.value ?? 0;
+      });
+    }, onError: (Object o) {
+      final DatabaseError error = o;
+      setState(() {
+        _error = error;
+      });
+    });
+
     _messagesSubscription =
-        _messagesRef.limitToLast(10).onChildAdded.listen((Event event) {
+        _messagesRef
+            .limitToLast(10)
+            .onChildAdded
+            .listen((Event event) {
           print('Child read to confirm added: ${event.snapshot.value}');
         }, onError: (Object o) {
           final DatabaseError error = o;
@@ -115,9 +119,13 @@ class _WritePageState extends State<WritePage> {
 
     if (transactionResult.committed) {
       _messagesRef.push().set(<String, String>{
-        _kUserKey: ' $ideaDescription ${transactionResult.dataSnapshot.value}'
+        _kUserKey: '\n description: $ideaDescription \n idea no:${transactionResult
+            .dataSnapshot.value}',
+        _kVoteKey: '0'
       });
-    } else {
+    }
+
+    else {
       print('Transaction not committed.');
       if (transactionResult.error != null) {
         print(transactionResult.error.message);
@@ -128,14 +136,14 @@ class _WritePageState extends State<WritePage> {
   Future<void> _voteIncrement() async {
     // Increment counter in transaction.
     final TransactionResult transactionResult =
-    await _ideacounterRef.runTransaction((MutableData mutableData) async {
-      mutableData.value = (mutableData.value ?? 0) + 1;
+    await _messagesRef.runTransaction((MutableData mutableData) async {
+      mutableData.value[2] = (mutableData.value[2] ?? 0) + 1;
       return mutableData;
     });
 
     if (transactionResult.committed) {
       _messagesRef.push().set(<String, String>{
-        _kVoteKey: ' $_kVoteValue  ${transactionResult.dataSnapshot.value}'
+        _kVoteKey: ' ${transactionResult.dataSnapshot.value}'
       });
     } else {
       print('Transaction not committed.');
@@ -225,7 +233,10 @@ class _WritePageState extends State<WritePage> {
                 heightFactor: 1,
                 child: _error == null
                     ? Text(
-                    'Submited ideas: $_ideacounter idea${_ideacounter == 1 ? '' : 's'}.\n\n'
+                    'Submited ideas: $_ideacounter idea${_ideacounter == 1
+                        ? ''
+                        : 's'}.\n\n '
+                        'Vote count: $_votecounter'
 
                 )
                     : Text(
@@ -254,7 +265,8 @@ class _WritePageState extends State<WritePage> {
                 query: _messagesRef,
                 reverse: _anchorToBottom,
                 sort: _anchorToBottom
-                    ? (DataSnapshot a, DataSnapshot b) => b.value.compareTo(a.value)
+                    ? (DataSnapshot a, DataSnapshot b) =>
+                    b.value('vote_counter').compareTo(a.value('vote_counter'))
                     : null,
                 itemBuilder: (BuildContext context, DataSnapshot snapshot,
                     Animation<double> animation, int index) {
@@ -264,10 +276,11 @@ class _WritePageState extends State<WritePage> {
                       leading:
                       IconButton(
                         onPressed: () =>
-                            _votecounterRef.child(snapshot.key).set(0),
+                            _votecounterRef.child(snapshot.key).set(
+                                _voteIncrement()),
                         icon: Icon(Icons.thumb_up,
 
-                          ),
+                        ),
 
                       ),
 
@@ -277,7 +290,8 @@ class _WritePageState extends State<WritePage> {
                         icon: Icon(Icons.delete),
                       ),
                       title: Text(
-                        "${snapshot.value.toString()}",
+                        "${snapshot.value.toString()}   ${snapshot
+                            .value['vote_key']}",
                       ),
                     ),
                   );
