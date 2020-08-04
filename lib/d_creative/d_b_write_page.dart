@@ -34,9 +34,10 @@ class _WritePageState extends State<WritePage> {
 
   bool _anchorToBottom = false;
 
-  String _kUserKey = name;
+  String _kUserKey = 'user_name';
   String _kVoteKey = 'vote_counter';
-  String _kImageKey = 'vote_value';
+  String _kIdea_no_Key = 'idea_number';
+  String _kIdea_des_Key = 'idea_description';
 
   DatabaseError _error;
 
@@ -51,9 +52,11 @@ class _WritePageState extends State<WritePage> {
         FirebaseDatabase.instance.reference().child('vote_counter');
 
     _messagesRef = database.reference().child('ideas');
-    database.reference().child('counter');
-    database.reference().child('vote_counter')
-        .once().then((DataSnapshot snapshot) {
+    database
+        .reference()
+        .child('idea_counter')
+        .once()
+        .then((DataSnapshot snapshot) {
       print('Connected to second database and read ${snapshot.value}');
     });
 
@@ -62,7 +65,6 @@ class _WritePageState extends State<WritePage> {
 
     _votecounterRef.keepSynced(true);
     _ideacounterRef.keepSynced(true);
-
 
     _ideacounterSubscription = _ideacounterRef.onValue.listen((Event event) {
       setState(() {
@@ -119,9 +121,11 @@ class _WritePageState extends State<WritePage> {
 
     if (transactionResult.committed) {
       _messagesRef.push().set(<String, String>{
-        _kUserKey: '\n description: $ideaDescription \n idea no:${transactionResult
-            .dataSnapshot.value}',
-        _kVoteKey: '0'
+
+        _kUserKey: '$name',
+        _kIdea_des_Key: '$ideaDescription',
+        _kIdea_no_Key: '$_ideacounter',
+        _kVoteKey: '$_votecounter'
       });
     }
 
@@ -136,8 +140,8 @@ class _WritePageState extends State<WritePage> {
   Future<void> _voteIncrement() async {
     // Increment counter in transaction.
     final TransactionResult transactionResult =
-    await _messagesRef.runTransaction((MutableData mutableData) async {
-      mutableData.value[2] = (mutableData.value[2] ?? 0) + 1;
+    await _votecounterRef.runTransaction((MutableData mutableData) async {
+      mutableData.value = (mutableData.value ?? 0) + 1;
       return mutableData;
     });
 
@@ -276,8 +280,8 @@ class _WritePageState extends State<WritePage> {
                       leading:
                       IconButton(
                         onPressed: () =>
-                            _votecounterRef.child(snapshot.key).set(
-                                _voteIncrement()),
+                            _votecounterRef.child(snapshot.key)
+                                .set(1),
                         icon: Icon(Icons.thumb_up,
 
                         ),
@@ -290,8 +294,10 @@ class _WritePageState extends State<WritePage> {
                         icon: Icon(Icons.delete),
                       ),
                       title: Text(
-                        "${snapshot.value.toString()}   ${snapshot
-                            .value['vote_key']}",
+                        "User: ${snapshot.value['user_name']}\n"
+                            "Description: ${snapshot
+                            .value['idea_description']}\n"
+                            "Vote count: ${snapshot.value['vote_counter']}",
                       ),
                     ),
                   );
