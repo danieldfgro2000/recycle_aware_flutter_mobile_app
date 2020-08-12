@@ -48,8 +48,10 @@ class _WritePageState extends State<WritePage> {
 
     _ideacounterRef =
         FirebaseDatabase.instance.reference().child('idea_counter');
-    _votecounterRef =
-        FirebaseDatabase.instance.reference().child('vote_counter');
+    _votecounterRef = FirebaseDatabase.instance
+        .reference()
+        .child('ideas')
+        .child('vote_counter');
 
     _messagesRef = database.reference().child('ideas');
     database
@@ -126,6 +128,7 @@ class _WritePageState extends State<WritePage> {
         _kIdea_des_Key: '$ideaDescription',
         _kIdea_no_Key: '$_ideacounter',
         _kVoteKey: '$_votecounter'
+
       });
     }
 
@@ -146,7 +149,7 @@ class _WritePageState extends State<WritePage> {
     });
 
     if (transactionResult.committed) {
-      _messagesRef.push().set(<String, String>{
+      _votecounterRef.push().set(<String, String>{
         _kVoteKey: ' ${transactionResult.dataSnapshot.value}'
       });
     } else {
@@ -274,14 +277,17 @@ class _WritePageState extends State<WritePage> {
                     : null,
                 itemBuilder: (BuildContext context, DataSnapshot snapshot,
                     Animation<double> animation, int index) {
-                  return SizeTransition(
-                    sizeFactor: animation,
+                  return Card(
+//                    sizeFactor: animation,
                     child: ListTile(
                       leading:
                       IconButton(
                         onPressed: () =>
-                            _votecounterRef.child(snapshot.key)
-                                .set(1),
+
+                            _messagesRef.child(snapshot.key).child(
+                                'vote_counter')
+                                .set(_votecounter),
+
                         icon: Icon(Icons.thumb_up,
 
                         ),
