@@ -33,10 +33,7 @@ class _VotePageState extends State<VotePage> {
   bool _anchorToBottom = false;
 
   String _kUserKey = name;
-//  String _kIdeaValue = 'idea_subscription';
   String _kVoteKey = 'vote_key';
-//  String _kVoteValue = 'vote_value';
-
 
   DatabaseError _error;
 
@@ -187,16 +184,16 @@ class _VotePageState extends State<VotePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 15),
+          SizedBox(height: 25),
           Flexible(
             child: Center(
-              heightFactor: 1,
+              heightFactor: 0.5,
               child: _error == null
                   ? Text(
                       'Submited ideas: $_ideacounter idea${_ideacounter == 1 ? '' : 's'}.\n\n')
                   : Text(
-                'Error retrieving button tap count:\n${_error.message}',
-              ),
+                      'Error retrieving button tap count:\n${_error.message}',
+                    ),
             ),
           ),
           ListTile(
@@ -212,67 +209,49 @@ class _VotePageState extends State<VotePage> {
             title: const Text('Sort by most voted ideas'),
           ),
           Flexible(
+            flex: 10,
             child: FirebaseAnimatedList(
+
               key: ValueKey<bool>(_anchorToBottom),
               query: _messagesRef,
               reverse: _anchorToBottom,
               sort: _anchorToBottom
-                  ? (DataSnapshot a, DataSnapshot b) => b.value.compareTo(a.value)
+                  ? (DataSnapshot a, DataSnapshot b) =>
+                  b.value.compareTo(a.value)
                   : null,
               itemBuilder: (BuildContext context, DataSnapshot snapshot,
                   Animation<double> animation, int index) {
-                return SizeTransition(
-                  sizeFactor: animation,
+                return Card(
+                  elevation: 5,
                   child: ListTile(
-                    trailing:
-                      IconButton(
-                        icon: Icon(Icons.thumb_up),
-                        onPressed:
-//                            _voteCounter,
-                            () =>
-                            _votecountRef.child(snapshot.key).set(_increment()),
+                    leading:
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child:
+                      Image.asset("assets/images/ecou_logo_crop.png",
+
+                        fit: BoxFit.scaleDown,
                       ),
+                    ),
+                    trailing:
+                    IconButton(
+                      icon: Icon(Icons.thumb_up),
+                      onPressed:
+//                            _voteCounter,
+                          () =>
+                          _votecountRef.child(snapshot.key).set(_increment()),
+                    ),
 
                     title: Text(
-                      "$index: ${snapshot.value.toString()}",
+                      "User: ${snapshot.value['user_name']}\n"
+                          "Description: ${snapshot
+                          .value['idea_description']}\n"
+                          "Vote count: ${snapshot.value['vote_counter']}",
                     ),
                   ),
                 );
               },
             ),
-//            child: FirebaseAnimatedList(
-//              key: ValueKey<bool>(_anchorToBottom),
-//              query: FirebaseDatabase.instance
-//                  .reference()
-//                  .child('ideas')
-//                  .child('vote_counter')
-//                  .orderByChild('vote_conter')           // line changed
-//                  .equalTo(_anchorToBottom),
-//              reverse: _anchorToBottom,
-//              sort: _anchorToBottom
-//                  ? (DataSnapshot a, DataSnapshot b) => b.value.compareTo(a.value)
-//                  : null,
-//              itemBuilder: (BuildContext context, DataSnapshot snapshot,
-//                  Animation<double> animation, int index) {
-//                return SizeTransition(
-//                  sizeFactor: animation,
-//                  child: ListTile(
-//                    trailing:
-//                    IconButton(
-//                      onPressed:
-////                            _voteCounter,
-//                          () =>
-//                          _votecountRef.child(snapshot.key).set(1),
-//                      icon: Icon(Icons.thumb_up),
-//                    ),
-//
-//                    title: Text(
-//                      "$index: ${snapshot.value.toString()}",
-//                    ),
-//                  ),
-//                );
-//              },
-//            ),
           ),
         ],
       ),

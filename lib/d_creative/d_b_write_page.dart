@@ -301,10 +301,9 @@ class _WritePageState extends State<WritePage> {
                       ),
                       title: Text(
                         "User: ${snapshot.value['user_name']}\n"
-                            "Description: ${snapshot
-                            .value['idea_description']}\n"
-                            "Vote count: ${snapshot.value['vote_counter']}",
-                      ),
+                      "Description: ${snapshot.value['idea_description']}\n"
+                      "Vote count: ${snapshot.value['vote_counter']}",
+                    ),
                     ),
                   );
                 },
