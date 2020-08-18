@@ -438,19 +438,6 @@ class MyApp extends StatelessWidget {
         );
       },
     );
-//    return MaterialApp(
-//      title: 'ECO-U',
-//      theme: ThemeData(
-//        brightness: Brightness.light,
-//        primarySwatch: Colors.green,
-//        visualDensity: VisualDensity.adaptivePlatformDensity,
-//      ),
-//      darkTheme: ThemeData(
-//        brightness: Brightness.dark,
-//        primarySwatch: Colors.orange,
-//      ),
-//      home: LoginPage(),
-//    );
   }
 }
 

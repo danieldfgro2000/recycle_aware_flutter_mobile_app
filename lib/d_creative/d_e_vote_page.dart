@@ -84,7 +84,7 @@ class _VotePageState extends State<VotePage> {
     super.dispose();
     _messagesSubscription.cancel();
     _ideacounterSubscription.cancel();
-    _votecountSubscription.cancel();
+//    _votecountSubscription.cancel();
   }
 
   Future<void> _voteCounter() async {
@@ -222,14 +222,13 @@ class _VotePageState extends State<VotePage> {
               itemBuilder: (BuildContext context, DataSnapshot snapshot,
                   Animation<double> animation, int index) {
                 return Card(
+                  color: Colors.teal,
                   elevation: 5,
                   child: ListTile(
-                    leading:
-                    ClipRRect(
+                    leading: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
-                      child:
-                      Image.asset("assets/images/ecou_logo_crop.png",
-
+                      child: Image.asset(
+                        "assets/images/ecou_logo_crop.png",
                         fit: BoxFit.scaleDown,
                       ),
                     ),

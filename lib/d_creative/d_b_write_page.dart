@@ -266,19 +266,21 @@ class _WritePageState extends State<WritePage> {
             ),
 
             Flexible(
+              flex: 10,
+            child: FirebaseAnimatedList(
+              key: ValueKey<bool>(_anchorToBottom),
+              query: _messagesRef,
+              reverse: _anchorToBottom,
+              sort: _anchorToBottom
+                  ? (DataSnapshot a, DataSnapshot b) =>
+                      b.value('vote_counter').compareTo(a.value('vote_counter'))
+                  : null,
+              itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                  Animation<double> animation, int index) {
+                return Card(
+                    color: Colors.cyan,
+                    elevation: 5,
 
-              child: FirebaseAnimatedList(
-                key: ValueKey<bool>(_anchorToBottom),
-                query: _messagesRef,
-                reverse: _anchorToBottom,
-                sort: _anchorToBottom
-                    ? (DataSnapshot a, DataSnapshot b) =>
-                    b.value('vote_counter').compareTo(a.value('vote_counter'))
-                    : null,
-                itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                    Animation<double> animation, int index) {
-                  return Card(
-//                    sizeFactor: animation,
                     child: ListTile(
                       leading:
                       IconButton(
@@ -289,7 +291,7 @@ class _WritePageState extends State<WritePage> {
                                 .set(_votecounter),
 
                         icon: Icon(Icons.thumb_up,
-
+                          color: Colors.yellow,
                         ),
 
                       ),
@@ -336,12 +338,7 @@ class MyCustomForm extends StatefulWidget {
 }// Define a corresponding State class.
 
 class MyCustomFormState extends State<MyCustomForm> {
-//  ideaDescription = value;
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
+
   final _formkey = GlobalKey<FormState>();
 
   @override
@@ -354,32 +351,32 @@ class MyCustomFormState extends State<MyCustomForm> {
             children: <Widget>[
 
               // Add TextFormFields and RaisedButton here.
-              SizedBox(height: 50),
+              SizedBox(height: 5),
               TextFormField(
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 decoration: InputDecoration(
-                            border: OutlineInputBorder(borderSide: BorderSide(color: Colors.grey)),
-                            hintText: '''Please write down your Idea here
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey)),
+                    hintText: '''Please write down your Idea here
 as detailed as possible,
 then hit the Submit Button.'''
-                        ),// The validator receives the text that the user has entered.
+                ), // The validator receives the text that the user has entered.
                 validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    print(value);
-                    ideaDescription = value;
-            return null;
-            },
-            ),
-              SizedBox(height: 20),
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  print(value);
+                  ideaDescription = value;
+                  return null;
+                },
+              ),
+              SizedBox(height: 5),
 
               OutlineButton(
                 onPressed: () {
                   // Validate returns true if the form is valid, otherwise false.
                   if (_formkey.currentState.validate()) {
-
                     // If the form is valid, display a snackbar. In the real world,
                     // you'd often call a server or save the information in a database.
 
