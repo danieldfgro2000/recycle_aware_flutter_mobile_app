@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import '../a_b_services/a_sign_in.dart';
-import '../c_home/c_a_main_page.dart';
 import '../b_info/b_a_main_page.dart';
+import '../c_home/c_a_main_page.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -158,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image(image: AssetImage("assets/images/google_logo.png"),
-                height: 35.0),
+                height: 30.0),
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(

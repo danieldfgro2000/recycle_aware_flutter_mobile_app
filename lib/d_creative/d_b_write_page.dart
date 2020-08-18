@@ -290,9 +290,10 @@ class _WritePageState extends State<WritePage> {
                                 'vote_counter')
                                 .set(_votecounter),
 
-                        icon: Icon(Icons.thumb_up,
-                          color: Colors.yellow,
-                        ),
+                        icon: Icon(
+                        Icons.thumb_up,
+                        color: Colors.amber,
+                      ),
 
                       ),
 

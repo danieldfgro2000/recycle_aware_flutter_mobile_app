@@ -158,29 +158,33 @@ class _FirstScreenState extends State<FirstScreen> {
                              mainAxisSize: MainAxisSize.min,
                              mainAxisAlignment: MainAxisAlignment.center,
                              children: <Widget>[
-                               Image(image: AssetImage(
-                                   "assets/images/google_logo.png"),
-                                   height: 20.0),
-                               Padding(
-                                 padding: const EdgeInsets.only(left: 10),
-                                 child: Text(
-                                   'Sign out ' + name + '  ',
-                                   style: TextStyle(
-                                     fontSize: 20,
-                                     color: Colors.teal,),),),
-                               CircleAvatar(
-                                 backgroundImage: NetworkImage(
-                                   imageUrl,
-                                 ),
-                                 radius: 20,
-                                 backgroundColor: Colors.transparent,),
-
-                             ],
-                           ),
-                         ),
-                       ),
-                       SizedBox(height: 50),
-                     ],),
+                              Image(
+                                  image: AssetImage(
+                                      "assets/images/google_logo.png"),
+                                  height: 30.0),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5),
+                                child: Text(
+                                  'Sign out ' + name + '  ',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.teal,
+                                  ),
+                                ),
+                              ),
+                              CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  imageUrl,
+                                ),
+                                radius: 20,
+                                backgroundColor: Colors.transparent,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                    ],),
                   ),
                ),
               ],

@@ -41,17 +41,24 @@ class _VotePageState extends State<VotePage> {
   void initState() {
     super.initState();
 
-    _ideacounterRef = FirebaseDatabase.instance.reference().child('idea_counter');
-    _votecountRef = FirebaseDatabase.instance.reference().child('vote_counter');
+    _ideacounterRef =
+        FirebaseDatabase.instance.reference().child('idea_counter');
+    _votecountRef = FirebaseDatabase.instance
+        .reference()
+        .child('ideas')
+        .child('vote_counter');
 
     final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
 
     _messagesRef = database.reference().child('ideas');
-                   database.reference().child('counter');
-                   database.reference().child('vote_counter')
-                       .once().then((DataSnapshot snapshot) {
-            print('Connected to second database and read ${snapshot.value}');
-                  });
+    database.reference().child('counter');
+    database
+        .reference()
+        .child('vote_counter')
+        .once()
+        .then((DataSnapshot snapshot) {
+      print('Connected to second database and read ${snapshot.value}');
+    });
 
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
@@ -115,6 +122,7 @@ class _VotePageState extends State<VotePage> {
     await _votecountRef.runTransaction((MutableData mutableData) async {
       mutableData.value = (mutableData.value ?? 0) + 1;
       votecount = mutableData as String;
+      print("Vote counter = $mutableData");
       return mutableData;
     });
     if (transactionResult.committed) {
@@ -234,11 +242,12 @@ class _VotePageState extends State<VotePage> {
                     ),
                     trailing:
                     IconButton(
-                      icon: Icon(Icons.thumb_up),
+                      icon: Icon(Icons.thumb_up, color: Colors.amber,),
                       onPressed:
 //                            _voteCounter,
                           () =>
-                          _votecountRef.child(snapshot.key).set(_increment()),
+//                          FieldValue.increment(1)
+                      _votecountRef.child(snapshot.key).set(_increment()),
                     ),
 
                     title: Text(
