@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -23,21 +24,27 @@ class _WritePageState extends State<WritePage> {
 
   int _ideacounter;
   int _votecounter;
+  int _uservotecounter;
 
   DatabaseReference _ideacounterRef;
   DatabaseReference _votecounterRef;
   DatabaseReference _messagesRef;
+  DatabaseReference _userVoteRef;
+  DatabaseReference _userVoteCountRef;
 
   StreamSubscription<Event> _ideacounterSubscription;
   StreamSubscription<Event> _messagesSubscription;
   StreamSubscription<Event> _votecounterSubscription;
 
   bool _anchorToBottom = false;
+  bool _isButtonDisabled = false;
 
   String _kUserKey = 'user_name';
+  String _kUserVote = "user_vote";
   String _kVoteKey = 'vote_counter';
   String _kIdea_no_Key = 'idea_number';
   String _kIdea_des_Key = 'idea_description';
+  String _kIdea_ID_key = 'ideas_generated_keys';
 
   DatabaseError _error;
 
@@ -46,29 +53,26 @@ class _WritePageState extends State<WritePage> {
     super.initState();
     final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
 
-    _ideacounterRef =
-        FirebaseDatabase.instance.reference().child('idea_counter');
-    _votecounterRef = FirebaseDatabase.instance
-        .reference()
-        .child('ideas')
-        .child('vote_counter');
-
+    _ideacounterRef = database.reference().child('idea_counter');
+    _votecounterRef = database.reference().child('vote_counter');
     _messagesRef = database.reference().child('ideas');
-    database
+    _userVoteRef = database.reference().child('user_vote');
+    _userVoteCountRef = database
         .reference()
-        .child('idea_counter')
-        .once()
-        .then((DataSnapshot snapshot) {
-      print('Connected to second database and read ${snapshot.value}');
-    });
+        .child('user_vote')
+        .child('$_kIdea_ID_key')
+        .child('$name');
 
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
 
-    _votecounterRef.keepSynced(true);
     _ideacounterRef.keepSynced(true);
 
-    _ideacounterSubscription = _ideacounterRef.onValue.listen((Event event) {
+    _ideacounterSubscription = database
+        .reference()
+        .child('idea_counter')
+        .onValue
+        .listen((Event event) {
       setState(() {
         _error = null;
         _ideacounter = event.snapshot.value ?? 0;
@@ -80,11 +84,19 @@ class _WritePageState extends State<WritePage> {
       });
     });
 
-    _votecounterSubscription = _votecounterRef.onValue.listen((Event event) {
-      setState(() {
-        _error = null;
-        _votecounter = event.snapshot.value ?? 0;
-      });
+    _votecounterSubscription = database
+        .reference()
+        .child('vote_counter')
+        .onValue
+        .listen((Event event) {
+      if (mounted) {
+        setState(() {
+          _error = null;
+          _votecounter = event.snapshot.value ?? 0;
+          // ignore: unnecessary_statements
+        });
+      } else
+        null;
     }, onError: (Object o) {
       final DatabaseError error = o;
       setState(() {
@@ -93,13 +105,10 @@ class _WritePageState extends State<WritePage> {
     });
 
     _messagesSubscription =
-        _messagesRef
-            .limitToLast(10)
-            .onChildAdded
-            .listen((Event event) {
-          print('Child read to confirm added: ${event.snapshot.value}');
-        }, onError: (Object o) {
-          final DatabaseError error = o;
+        _messagesRef.limitToLast(10).onChildAdded.listen((Event event) {
+      print('Read available entries: ${event.snapshot.value}');
+    }, onError: (Object o) {
+      final DatabaseError error = o;
           print('Error: ${error.code} ${error.message}');
         });
   }
@@ -122,13 +131,12 @@ class _WritePageState extends State<WritePage> {
     });
 
     if (transactionResult.committed) {
+      _votecounter = 0;
       _messagesRef.push().set(<String, String>{
-
         _kUserKey: '$name',
         _kIdea_des_Key: '$ideaDescription',
         _kIdea_no_Key: '$_ideacounter',
         _kVoteKey: '$_votecounter'
-
       });
     }
 
@@ -144,15 +152,95 @@ class _WritePageState extends State<WritePage> {
     // Increment counter in transaction.
     final TransactionResult transactionResult =
     await _votecounterRef.runTransaction((MutableData mutableData) async {
+      mutableData.value = _uservotecounter ?? 0;
+      return mutableData;
+    });
+
+    if (_uservotecounter > 1) {
+      print(
+          'deactivate_thumbUp <_isButtonDisabled= True> value for _uservotecounte= $_uservotecounter');
+      setState(() {
+        _isButtonDisabled = true;
+      });
+    }
+
+    else if (transactionResult.committed) {
+      print(
+          "_voteIncrement transaction committed, _uservotecounter  =  $_uservotecounter");
+      _messagesRef.child(_kIdea_ID_key).update(<String, String>{
+        _kVoteKey: '$_uservotecounter'
+      });
+    }
+
+    else {
+      print('_voteIncrement: ! Transaction not committed.');
+      if (transactionResult.error != null) {
+        print(transactionResult.error.message);
+      }
+    }
+//    _uservotecounter = 0;
+  }
+
+  Future<void> _userVoteIncrement() async {
+    // allow only one vote / user / idea
+
+    print(
+        "_allowOneVote <Start> Value for _uservotecounter is: $_uservotecounter");
+
+    final TransactionResult transactionResult =
+    await _userVoteRef.child(_kIdea_ID_key).child(name).runTransaction((
+        MutableData mutableData) async {
       mutableData.value = (mutableData.value ?? 0) + 1;
+      return mutableData;
+    });
+    if (transactionResult.committed) {
+      _votecounterSubscription =
+          FirebaseDatabase.instance
+              .reference()
+              .child('user_vote')
+              .child(_kIdea_ID_key)
+              .child(name)
+              .onValue
+              .listen((Event event) {
+            if (mounted) {
+              setState(() {
+                _voteIncrement();
+                _error = null;
+                _uservotecounter = event.snapshot.value ?? 0;
+                print(
+                    "_allowOneVote <_votecounterSubscription> Value changed => _uservotecounter= ${event
+                        .snapshot.value}");
+              });
+            }
+          }, onError: (Object o) {
+            final DatabaseError error = o;
+            setState(() {
+              _error = error;
+            });
+          });
+    }
+    else {
+      print('_allowOneVote Transaction not committed.');
+      if (transactionResult.error != null) {
+        print(transactionResult.error.message);
+      }
+    }
+  }
+
+  Future<void> _ideaDecrement() async {
+    // Increment counter in transaction.
+    final TransactionResult transactionResult =
+    await _ideacounterRef.runTransaction((MutableData mutableData) async {
+      mutableData.value = (mutableData.value ?? 0) - 1;
       return mutableData;
     });
 
     if (transactionResult.committed) {
-      _votecounterRef.push().set(<String, String>{
-        _kVoteKey: ' ${transactionResult.dataSnapshot.value}'
-      });
-    } else {
+      print(
+          "_ideaDecrement <Transaction Commited>  idea count = $_ideacounter");
+    }
+
+    else {
       print('Transaction not committed.');
       if (transactionResult.error != null) {
         print(transactionResult.error.message);
@@ -160,16 +248,31 @@ class _WritePageState extends State<WritePage> {
     }
   }
 
+  // ignore: non_constant_identifier_names
+  Future<void> deactivate_thumbUp() async {
+    if (_uservotecounter >= 1) {
+      print(
+          'deactivate_thumbUp <_isButtonDisabled= True> value for _uservotecounte= $_uservotecounter');
+      setState(() async {
+        _isButtonDisabled = true;
+      });
+    }
+
+    else {
+      print(
+          'deactivate_thumbUp <_isButtonDisabled= False> value for _uservotecounte= $_uservotecounter');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      key: _formkey,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50.0), // here the desired height
-          child: AppBar(
+
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50.0), // here the desired height
+        child: AppBar(
 //              title: Text('Write ', textScaleFactor: 0.9,),
-              leading:
+            leading:
               IconButton(
                 icon: Icon(
                   Icons.arrow_back,
@@ -267,46 +370,78 @@ class _WritePageState extends State<WritePage> {
 
             Flexible(
               flex: 10,
-            child: FirebaseAnimatedList(
-              key: ValueKey<bool>(_anchorToBottom),
-              query: _messagesRef,
-              reverse: _anchorToBottom,
-              sort: _anchorToBottom
-                  ? (DataSnapshot a, DataSnapshot b) =>
-                      b.value('vote_counter').compareTo(a.value('vote_counter'))
-                  : null,
-              itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                  Animation<double> animation, int index) {
-                return Card(
+              child: FirebaseAnimatedList(
+                key: ValueKey<bool>(_anchorToBottom),
+                query: _messagesRef,
+                reverse: _anchorToBottom,
+                sort: _anchorToBottom
+                    ? (DataSnapshot a, DataSnapshot b) =>
+                    b.value('vote_counter').compareTo(a.value('vote_counter'))
+                    : null,
+
+                itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                    Animation<double> animation, int index) {
+                  return Card(
                     color: Colors.cyan,
                     elevation: 5,
 
                     child: ListTile(
                       leading:
                       IconButton(
-                        onPressed: () =>
-
-                            _messagesRef.child(snapshot.key).child(
-                                'vote_counter')
-                                .set(_votecounter),
-
-                        icon: Icon(
-                        Icons.thumb_up,
                         color: Colors.amber,
-                      ),
+                        disabledColor: Colors.black12,
+                        onPressed:
+                        _isButtonDisabled ? null : () async {
+                          print("Thumb: _uservotecounter = ${snapshot
+                              .value['vote_counter']}");
+//                              _uservotecounter = snapshot.value['vote_counter'];
+                          if ((_uservotecounter ?? 0) <= 1) {
+                            setState(() {
+                              _kIdea_ID_key = '${snapshot.key}';
+                            });
+                            _userVoteIncrement();
+                            print(
+                                "_Vote Button clicked: Ideas transaction ID  $_kIdea_ID_key");
+                          }
+                          // ignore: unnecessary_statements
+                          else {
+//                                null;
+                            if (SemanticsFlag.isSelected != null) {
+                              setState(() =>
+                              {
+                                _isButtonDisabled = true,
+                                print('Button disabled'),});
+                            }
+                          }
+                        }
+                        ,
+                        icon: Icon(
+                          Icons.thumb_up,
+                          color: Colors.amber,
+                        ),
 
                       ),
 
                       trailing: IconButton(
                         onPressed: () =>
-                            _messagesRef.child(snapshot.key).remove(),
+                        {
+                          _messagesRef.child(snapshot.key).remove(),
+                          _userVoteRef.child(snapshot.key).remove(),
+
+                          _ideaDecrement(),
+                          print("Delete btn pressed"),
+                        },
+
                         icon: Icon(Icons.delete),
                       ),
+
                       title: Text(
-                        "User: ${snapshot.value['user_name']}\n"
-                      "Description: ${snapshot.value['idea_description']}\n"
-                      "Vote count: ${snapshot.value['vote_counter']}",
-                    ),
+
+                        "User: ${snapshot?.value['user_name']}\n"
+                            "Description: ${snapshot
+                            ?.value['idea_description']}\n"
+                            "Vote count: ${snapshot?.value['vote_counter']}",
+                      ),
                     ),
                   );
                 },

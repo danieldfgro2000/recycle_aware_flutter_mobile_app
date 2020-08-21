@@ -21,9 +21,11 @@ class VotePage extends StatefulWidget {
 class _VotePageState extends State<VotePage> {
 
   int _ideacounter;
+  int _votecounter;
 
   DatabaseReference _ideacounterRef;
   DatabaseReference _votecountRef;
+  DatabaseReference _votecount;
   DatabaseReference _messagesRef;
 
   StreamSubscription<Event> _ideacounterSubscription;
@@ -43,12 +45,9 @@ class _VotePageState extends State<VotePage> {
 
     _ideacounterRef =
         FirebaseDatabase.instance.reference().child('idea_counter');
-    _votecountRef = FirebaseDatabase.instance
-        .reference()
-        .child('ideas')
-        .child('vote_counter');
 
     final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
+    _votecountRef = database.reference().child('ideas');
 
     _messagesRef = database.reference().child('ideas');
     database.reference().child('counter');
@@ -99,30 +98,50 @@ class _VotePageState extends State<VotePage> {
     final TransactionResult transactionResult =
     await _votecountRef.runTransaction((MutableData mutableData) async {
       mutableData.value = (mutableData.value ?? 0) + 1;
-      print("$mutableData test!!");
+      print("${mutableData.value} test!!");
       return mutableData;
 
     });
 
       if (transactionResult.committed) {
-      _messagesRef.push().set(<String, String>{
-        _kUserKey: '$_kVoteKey ${transactionResult.dataSnapshot.value
-        }'
-      });
-    }
-      else { print('Transaction not committed.');
+        _votecountRef.push().set(<String, String>{
+          'vote_counter': transactionResult.dataSnapshot.value
+        });
+      }
+      else {
+        print('Transaction not committed.');
         if (transactionResult.error != null) {
-            print(transactionResult.error.message);}
+          print(transactionResult.error.message);
         }
+      }
   }
 
+  Future<void> _voteIncrement() async {
+    // Increment counter in transaction.
+    final TransactionResult transactionResult =
+    await _votecountRef.runTransaction((MutableData mutableData) async {
+      mutableData.value = (mutableData.value ?? 0) + 1;
+      return mutableData;
+    });
+
+    if (transactionResult.committed) {
+      _votecountRef.push().set(<String, String>{
+        _kVoteKey: ' ${transactionResult.dataSnapshot.value}'
+      });
+    } else {
+      print('Transaction not committed.');
+      if (transactionResult.error != null) {
+        print(transactionResult.error.message);
+      }
+    }
+  }
   Future<void> _increment() async {
     // Increment counter in transaction.
     final TransactionResult transactionResult =
     await _votecountRef.runTransaction((MutableData mutableData) async {
       mutableData.value = (mutableData.value ?? 0) + 1;
       votecount = mutableData as String;
-      print("Vote counter = $mutableData");
+      print("Vote counter = $votecount");
       return mutableData;
     });
     if (transactionResult.committed) {
@@ -243,11 +262,11 @@ class _VotePageState extends State<VotePage> {
                     trailing:
                     IconButton(
                       icon: Icon(Icons.thumb_up, color: Colors.amber,),
-                      onPressed:
-//                            _voteCounter,
-                          () =>
-//                          FieldValue.increment(1)
-                      _votecountRef.child(snapshot.key).set(_increment()),
+                      onPressed: () =>
+                          _messagesRef
+                              .child(snapshot.key)
+                              .child('vote_counter')
+                              .set(_votecounter++),
                     ),
 
                     title: Text(
