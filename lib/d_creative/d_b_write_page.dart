@@ -307,26 +307,29 @@ class _WritePageState extends State<WritePage> {
                 IconButton(
                   icon: Icon(
                     Icons.home,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context){
-                          return FirstScreen();},),);
-                  },
+                  color: Colors.white,
                 ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return FirstScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
 
-                IconButton(
-                  icon: Icon(
-                    Icons.settings_applications,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    // do something
-                  },
-                )
-              ]),
+              // IconButton(
+              //   icon: Icon(
+              //     Icons.settings_applications,
+              //     color: Colors.white,
+              //   ),
+              //   onPressed: () {
+              //     // do something
+              //   },
+              // )
+            ]),
         ),
 
         body:Column(
