@@ -1,13 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
-
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapPage extends StatefulWidget {
   @override
@@ -17,11 +13,9 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
 
   Completer<GoogleMapController> _controller = Completer();
-  Choice _selectedChoice = choices[0];
   void _select(Choice choice) {
     // Causes the app to rebuild with the new _selectedChoice.
     setState(() {
-      _selectedChoice = choice;
     });
   }
   static final CameraPosition _kGooglePlex = CameraPosition(

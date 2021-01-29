@@ -241,8 +241,10 @@ class PessimisticAsyncOnInitState1 extends StatelessWidget {
                   //side effects
                   if (modelRM.hasError) {
                     //show a SnackBar on error
-                    Scaffold.of(context).hideCurrentSnackBar();
-                    Scaffold.of(context).showSnackBar(
+                    final ScaffoldMessengerState scaffoldMessenger =
+                        ScaffoldMessenger.of(context);
+                    scaffoldMessenger.hideCurrentSnackBar();
+                    scaffoldMessenger.showSnackBar(
                       SnackBar(
                         content: Text('${modelRM.error}'),
                       ),
@@ -343,8 +345,10 @@ class OptimisticAsync extends StatelessWidget {
               //debounce setState for 1 second
               debounceDelay: 1000,
               onError: (context, error) {
-                Scaffold.of(context).hideCurrentSnackBar();
-                Scaffold.of(context).showSnackBar(
+                final ScaffoldMessengerState scaffoldMessenger =
+                    ScaffoldMessenger.of(context);
+                scaffoldMessenger.hideCurrentSnackBar();
+                scaffoldMessenger.showSnackBar(
                   SnackBar(
                     content: Text('$error'),
                   ),
@@ -383,8 +387,10 @@ class OptimisticAsyncOnInitState extends StatelessWidget {
                 ///
                 onSetState: (context, modelRM) {
                   if (modelRM.hasError) {
-                    Scaffold.of(context).hideCurrentSnackBar();
-                    Scaffold.of(context).showSnackBar(
+                    final ScaffoldMessengerState scaffoldMessenger =
+                        ScaffoldMessenger.of(context);
+                    scaffoldMessenger.hideCurrentSnackBar();
+                    scaffoldMessenger.showSnackBar(
                       SnackBar(
                         content: Text('${modelRM.error}'),
                       ),

@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
 
 import '../b_info/b_a_main_page.dart';
 import '../c_home/c_a_main_page.dart';
@@ -18,7 +18,7 @@ class _DrawPageState extends State<DrawPage> {
   Color selectedColor = Colors.black;
   Color pickerColor = Colors.black;
   double strokeWidth = 3.0;
-  List<DrawingPoints> points = List();
+  List<DrawingPoints> points = [];
   bool showBottomList = false;
   double opacity = 1.0;
   StrokeCap strokeCap = (Platform.isAndroid) ? StrokeCap.butt : StrokeCap.round;
@@ -217,7 +217,7 @@ class _DrawPageState extends State<DrawPage> {
   }
 
   getColorList() {
-    List<Widget> listWidget = List();
+    List<Widget> listWidget = [];
     for (Color color in colors) {
       listWidget.add(colorCircle(color));
     }
@@ -290,7 +290,7 @@ class DrawingPainter extends CustomPainter {
   DrawingPainter({this.pointsList});
 
   List<DrawingPoints> pointsList;
-  List<Offset> offsetPoints = List();
+  List<Offset> offsetPoints = [];
 
   @override
 //  paint canvas
