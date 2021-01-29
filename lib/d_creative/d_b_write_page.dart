@@ -40,8 +40,13 @@ class _WritePageState extends State<WritePage> {
 
   String _kUserKey = 'user_name';
   String _kVoteKey = 'vote_counter';
+  // ignore: non_constant_identifier_names
   String _kIdea_no_Key = 'idea_number';
+
+  // ignore: non_constant_identifier_names
   String _kIdea_des_Key = 'idea_description';
+
+  // ignore: non_constant_identifier_names
   String _kIdea_ID_key = 'ideas_generated_keys';
 
   DatabaseError _error;
@@ -88,8 +93,7 @@ class _WritePageState extends State<WritePage> {
           _votecounter = event.snapshot.value ?? 0;
           // ignore: unnecessary_statements
         });
-      } else
-        null;
+      }
     }, onError: (Object o) {
       final DatabaseError error = o;
       setState(() {

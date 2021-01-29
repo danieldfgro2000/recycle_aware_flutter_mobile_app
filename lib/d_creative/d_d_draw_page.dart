@@ -225,6 +225,7 @@ class _DrawPageState extends State<DrawPage> {
       onTap: () {
         showDialog(
           context: context,
+          // ignore: deprecated_member_use
           child: AlertDialog(
             title: const Text('Pick a color!'),
             content: SingleChildScrollView(
