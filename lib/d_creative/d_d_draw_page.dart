@@ -226,28 +226,31 @@ class _DrawPageState extends State<DrawPage> {
         showDialog(
           context: context,
           // ignore: deprecated_member_use
-          child: AlertDialog(
-            title: const Text('Pick a color!'),
-            content: SingleChildScrollView(
-              child: ColorPicker(
-                pickerColor: pickerColor,
-                onColorChanged: (color) {
-                  pickerColor = color;
-                },
+          builder: (BuildContext context) {
+            child:
+            AlertDialog(
+              title: const Text('Pick a color!'),
+              content: SingleChildScrollView(
+                child: ColorPicker(
+                  pickerColor: pickerColor,
+                  onColorChanged: (color) {
+                    pickerColor = color;
+                  },
 //                enableLabel: true,
-                pickerAreaHeightPercent: 0.8,
+                  pickerAreaHeightPercent: 0.8,
+                ),
               ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                child: const Text('Save'),
-                onPressed: () {
-                  setState(() => selectedColor = pickerColor);
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Save'),
+                  onPressed: () {
+                    setState(() => selectedColor = pickerColor);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
         );
       },
       child: ClipOval(

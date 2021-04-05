@@ -141,16 +141,18 @@ class _CreativePageState extends State<CreativePage> {
                             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    'Txt2Scene',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.teal,),),),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  'Txt2Scene',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.teal,
+                                  ),
+                                ),
+                              ),
                               CircleAvatar(
                                 backgroundImage:
                                     AssetImage("assets/images/t2s_round.png"),
@@ -220,17 +222,16 @@ class _CreativePageState extends State<CreativePage> {
                         highlightElevation: 1,
                         borderSide: BorderSide(color: Colors.grey),
                         child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-
-                                Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(
-                                    'Vote ',
-                                    style: TextStyle(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(
+                                  'Vote ',
+                                  style: TextStyle(
                                       fontSize: 20,
                                       color: Colors.teal,),),),
                                 CircleAvatar(
