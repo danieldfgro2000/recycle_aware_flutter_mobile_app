@@ -4,9 +4,9 @@ Recycle Aware
 
 ## Purpose:
 
-*Raise awareness of Recycling importance
-*Provide useful information
-*Challenge community to use creativity in solving this problem
+ * Raise awareness of Recycling importance
+ * Provide useful information
+ * Challenge community to use creativity in solving this problem
 
 ![login](https://firebasestorage.googleapis.com/v0/b/general-data-63fcf.appspot.com/o/Recycle%20Awareness%20Flutter%20Login.png?alt=media&token=13b43d44-4838-467f-a5fa-5b16a988d26a)
 ![main](https://firebasestorage.googleapis.com/v0/b/general-data-63fcf.appspot.com/o/Recycle%20Awareness%20Flutter%20Main.png?alt=media&token=25f404ff-1137-4e6d-ad73-ee0f0348cc38)
