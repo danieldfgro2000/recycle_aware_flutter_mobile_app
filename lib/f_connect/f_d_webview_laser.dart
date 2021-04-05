@@ -22,7 +22,6 @@ The navigation delegate is set to block navigation to the youtube website.
 </html>
 ''';
 
-
 class T2sWebViewlaserPage extends StatefulWidget {
   @override
   _T2sWebViewlaserPageState createState() => _T2sWebViewlaserPageState();
@@ -30,34 +29,29 @@ class T2sWebViewlaserPage extends StatefulWidget {
 
 class _T2sWebViewlaserPageState extends State<T2sWebViewlaserPage> {
   final Completer<WebViewController> _controller =
-  Completer<WebViewController>();
+      Completer<WebViewController>();
 
   @override
-
   Widget build(BuildContext context) {
-    String webFormURL = 'https://www.xometry.com/plastic-3d-printing';
+    String webFormURL =
+        'https://www.xometry.com/capabilities/plastic-3d-printing/';
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0), // here the desired height
-        child: AppBar(
-            actions: <Widget>[
-              NavigationControls(_controller.future),
-              SampleMenu(_controller.future),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child:
-                Image.asset("assets/images/ecou_logo_crop.png",
-
-                  fit: BoxFit.fill,
-                ),
-              ),
-
-            ]),
+        child: AppBar(actions: <Widget>[
+          NavigationControls(_controller.future),
+          SampleMenu(_controller.future),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.asset(
+              "assets/images/ecou_logo_crop.png",
+              fit: BoxFit.fill,
+            ),
+          ),
+        ]),
       ),
-
       body: Builder(builder: (BuildContext context) {
         return WebView(
-
           initialUrl: webFormURL,
 
           javascriptMode: JavascriptMode.disabled,
@@ -276,7 +270,7 @@ class SampleMenu extends StatelessWidget {
   void _onNavigationDelegateExample(
       WebViewController controller, BuildContext context) async {
     final String contentBase64 =
-    base64Encode(const Utf8Encoder().convert(kNavigationExamplePage));
+        base64Encode(const Utf8Encoder().convert(kNavigationExamplePage));
     await controller.loadUrl('data:text/html;base64,$contentBase64');
   }
 
@@ -286,7 +280,7 @@ class SampleMenu extends StatelessWidget {
     }
     final List<String> cookieList = cookies.split(';');
     final Iterable<Text> cookieWidgets =
-    cookieList.map((String cookie) => Text(cookie));
+        cookieList.map((String cookie) => Text(cookie));
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
@@ -318,9 +312,9 @@ class NavigationControls extends StatelessWidget {
               onPressed: !webViewReady
                   ? null
                   : () async {
-                if (await controller.canGoBack()) {
-                  await controller.goBack();
-                } else {
+                      if (await controller.canGoBack()) {
+                        await controller.goBack();
+                      } else {
                         final ScaffoldMessengerState scaffoldMessenger =
                             ScaffoldMessenger.of(context);
                         scaffoldMessenger.showSnackBar(
@@ -335,9 +329,9 @@ class NavigationControls extends StatelessWidget {
               onPressed: !webViewReady
                   ? null
                   : () async {
-                if (await controller.canGoForward()) {
-                  await controller.goForward();
-                } else {
+                      if (await controller.canGoForward()) {
+                        await controller.goForward();
+                      } else {
                         final ScaffoldMessengerState scaffoldMessenger =
                             ScaffoldMessenger.of(context);
                         scaffoldMessenger.showSnackBar(
@@ -353,8 +347,8 @@ class NavigationControls extends StatelessWidget {
               onPressed: !webViewReady
                   ? null
                   : () {
-                controller.reload();
-              },
+                      controller.reload();
+                    },
             ),
           ],
         );
