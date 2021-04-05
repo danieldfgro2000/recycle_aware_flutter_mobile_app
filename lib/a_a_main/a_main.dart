@@ -125,6 +125,7 @@ class SetStateCanDoAll extends StatelessWidget {
           children: [
             //get the state of the model
             Text('${modelRM.state.counter}'),
+            // ignore: deprecated_member_use
             RaisedButton(
               child: Text('Increment (SetStateCanDoAll)'),
               onPressed: () async {
@@ -198,16 +199,16 @@ class PessimisticAsync extends StatelessWidget {
           onError: (error) => Text('Future completes with error $error'),
           onData: (Model data) => Text('${data.counter}'),
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text('Increment (PessimisticAsync - shouldAwait)'),
           onPressed: () {
             //All other widget subscribe to the global ReactiveModel will be notified to rebuild
             RM.get<Model>().setState(
                   (currentState) => currentState.futureIncrementImmutable(),
-              //will await the current future if its pending
-              //before calling futureIncrementImmutable
-              shouldAwait: true,
-            );
+                  //will await the current future if its pending
+                  //before calling futureIncrementImmutable
+                  shouldAwait: true,
+                );
           },
         )
       ],
@@ -241,8 +242,10 @@ class PessimisticAsyncOnInitState1 extends StatelessWidget {
                   //side effects
                   if (modelRM.hasError) {
                     //show a SnackBar on error
-                    Scaffold.of(context).hideCurrentSnackBar();
-                    Scaffold.of(context).showSnackBar(
+                    final ScaffoldMessengerState scaffoldMessenger =
+                        ScaffoldMessenger.of(context);
+                    scaffoldMessenger.hideCurrentSnackBar();
+                    scaffoldMessenger.showSnackBar(
                       SnackBar(
                         content: Text('${modelRM.error}'),
                       ),
@@ -257,7 +260,7 @@ class PessimisticAsyncOnInitState1 extends StatelessWidget {
               )
             else
               Container(),
-            RaisedButton(
+            ElevatedButton(
               child: Text(
                   '${switchRM.state ? "Dispose" : "Insert"} (PessimisticAsyncOnInitState1)'),
               onPressed: () {
@@ -308,7 +311,7 @@ class PessimisticAsyncOnInitState2 extends StatelessWidget {
                 )
               else
                 Text('This widget will not affect other widgets'),
-              RaisedButton(
+              ElevatedButton(
                 child: Text(
                     '${switchRM.state ? "Dispose" : "Insert"} (PessimisticAsyncOnInitState2)'),
                 onPressed: () {
@@ -335,16 +338,18 @@ class OptimisticAsync extends StatelessWidget {
           onWaiting: () => Text('Future is executing, we are waiting ....'),
           builder: (context, modelRM) => Text('${modelRM.state.counter}'),
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text('Increment (OptimisticAsync - debounceDelay)'),
           onPressed: () {
             RM.get<Model>().setState(
-                  (currentState) => currentState.streamIncrementMutable(),
+              (currentState) => currentState.streamIncrementMutable(),
               //debounce setState for 1 second
               debounceDelay: 1000,
               onError: (context, error) {
-                Scaffold.of(context).hideCurrentSnackBar();
-                Scaffold.of(context).showSnackBar(
+                final ScaffoldMessengerState scaffoldMessenger =
+                    ScaffoldMessenger.of(context);
+                scaffoldMessenger.hideCurrentSnackBar();
+                scaffoldMessenger.showSnackBar(
                   SnackBar(
                     content: Text('$error'),
                   ),
@@ -383,8 +388,10 @@ class OptimisticAsyncOnInitState extends StatelessWidget {
                 ///
                 onSetState: (context, modelRM) {
                   if (modelRM.hasError) {
-                    Scaffold.of(context).hideCurrentSnackBar();
-                    Scaffold.of(context).showSnackBar(
+                    final ScaffoldMessengerState scaffoldMessenger =
+                        ScaffoldMessenger.of(context);
+                    scaffoldMessenger.hideCurrentSnackBar();
+                    scaffoldMessenger.showSnackBar(
                       SnackBar(
                         content: Text('${modelRM.error}'),
                       ),
@@ -397,7 +404,7 @@ class OptimisticAsyncOnInitState extends StatelessWidget {
               )
             else
               Text('This widget will not affect other widgets'),
-            RaisedButton(
+            ElevatedButton(
               child: Text(
                   '${switchRM.state ? "Dispose" : "Insert"} (OptimisticAsyncOnInitState)'),
               onPressed: () {
@@ -465,7 +472,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Image.asset("assets/images/ecou_logo.png"),
-            FlatButton(
+            TextButton(
                 onPressed: () {
                   print('button pressed');
                 },

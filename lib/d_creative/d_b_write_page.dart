@@ -30,7 +30,6 @@ class _WritePageState extends State<WritePage> {
   DatabaseReference _votecounterRef;
   DatabaseReference _messagesRef;
   DatabaseReference _userVoteRef;
-  DatabaseReference _userVoteCountRef;
 
   StreamSubscription<Event> _ideacounterSubscription;
   StreamSubscription<Event> _messagesSubscription;
@@ -40,10 +39,14 @@ class _WritePageState extends State<WritePage> {
   bool _isButtonDisabled = false;
 
   String _kUserKey = 'user_name';
-  String _kUserVote = "user_vote";
   String _kVoteKey = 'vote_counter';
+  // ignore: non_constant_identifier_names
   String _kIdea_no_Key = 'idea_number';
+
+  // ignore: non_constant_identifier_names
   String _kIdea_des_Key = 'idea_description';
+
+  // ignore: non_constant_identifier_names
   String _kIdea_ID_key = 'ideas_generated_keys';
 
   DatabaseError _error;
@@ -57,11 +60,6 @@ class _WritePageState extends State<WritePage> {
     _votecounterRef = database.reference().child('vote_counter');
     _messagesRef = database.reference().child('ideas');
     _userVoteRef = database.reference().child('user_vote');
-    _userVoteCountRef = database
-        .reference()
-        .child('user_vote')
-        .child('$_kIdea_ID_key')
-        .child('$name');
 
     database.setPersistenceEnabled(true);
     database.setPersistenceCacheSizeBytes(10000000);
@@ -95,8 +93,7 @@ class _WritePageState extends State<WritePage> {
           _votecounter = event.snapshot.value ?? 0;
           // ignore: unnecessary_statements
         });
-      } else
-        null;
+      }
     }, onError: (Object o) {
       final DatabaseError error = o;
       setState(() {
@@ -307,26 +304,29 @@ class _WritePageState extends State<WritePage> {
                 IconButton(
                   icon: Icon(
                     Icons.home,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context){
-                          return FirstScreen();},),);
-                  },
+                  color: Colors.white,
                 ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return FirstScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
 
-                IconButton(
-                  icon: Icon(
-                    Icons.settings_applications,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    // do something
-                  },
-                )
-              ]),
+              // IconButton(
+              //   icon: Icon(
+              //     Icons.settings_applications,
+              //     color: Colors.white,
+              //   ),
+              //   onPressed: () {
+              //     // do something
+              //   },
+              // )
+            ]),
         ),
 
         body:Column(
@@ -513,14 +513,15 @@ then hit the Submit Button.'''
                 onPressed: () {
                   // Validate returns true if the form is valid, otherwise false.
                   if (_formkey.currentState.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
+                // If the form is valid, display a snackbar. In the real world,
+                // you'd often call a server or save the information in a database.
 
-                    Scaffold
-                        .of(context)
-                        .showSnackBar(SnackBar(content: Text('Processing Data')));
-                  }
-                },
+                final ScaffoldMessengerState scaffoldMessenger =
+                    ScaffoldMessenger.of(context);
+                scaffoldMessenger
+                    .showSnackBar(SnackBar(content: Text('Processing Data')));
+              }
+            },
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 highlightElevation: 1,
                 borderSide: BorderSide(color: Colors.grey),

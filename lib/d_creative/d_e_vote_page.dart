@@ -5,7 +5,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
-import '../a_b_services/a_sign_in.dart';
 import '../b_info/b_a_main_page.dart';
 import '../c_home/c_a_main_page.dart';
 
@@ -25,17 +24,13 @@ class _VotePageState extends State<VotePage> {
 
   DatabaseReference _ideacounterRef;
   DatabaseReference _votecountRef;
-  DatabaseReference _votecount;
   DatabaseReference _messagesRef;
 
   StreamSubscription<Event> _ideacounterSubscription;
   StreamSubscription<Event> _messagesSubscription;
-  StreamSubscription<Event> _votecountSubscription;
 
   bool _anchorToBottom = false;
 
-  String _kUserKey = name;
-  String _kVoteKey = 'vote_key';
 
   DatabaseError _error;
 
@@ -93,65 +88,7 @@ class _VotePageState extends State<VotePage> {
 //    _votecountSubscription.cancel();
   }
 
-  Future<void> _voteCounter() async {
-    // Increment counter in transaction.
-    final TransactionResult transactionResult =
-    await _votecountRef.runTransaction((MutableData mutableData) async {
-      mutableData.value = (mutableData.value ?? 0) + 1;
-      print("${mutableData.value} test!!");
-      return mutableData;
 
-    });
-
-      if (transactionResult.committed) {
-        _votecountRef.push().set(<String, String>{
-          'vote_counter': transactionResult.dataSnapshot.value
-        });
-      }
-      else {
-        print('Transaction not committed.');
-        if (transactionResult.error != null) {
-          print(transactionResult.error.message);
-        }
-      }
-  }
-
-  Future<void> _voteIncrement() async {
-    // Increment counter in transaction.
-    final TransactionResult transactionResult =
-    await _votecountRef.runTransaction((MutableData mutableData) async {
-      mutableData.value = (mutableData.value ?? 0) + 1;
-      return mutableData;
-    });
-
-    if (transactionResult.committed) {
-      _votecountRef.push().set(<String, String>{
-        _kVoteKey: ' ${transactionResult.dataSnapshot.value}'
-      });
-    } else {
-      print('Transaction not committed.');
-      if (transactionResult.error != null) {
-        print(transactionResult.error.message);
-      }
-    }
-  }
-  Future<void> _increment() async {
-    // Increment counter in transaction.
-    final TransactionResult transactionResult =
-    await _votecountRef.runTransaction((MutableData mutableData) async {
-      mutableData.value = (mutableData.value ?? 0) + 1;
-      votecount = mutableData as String;
-      print("Vote counter = $votecount");
-      return mutableData;
-    });
-    if (transactionResult.committed) {
-      print('Vote increment succeded');
-    }
-      else { print('Transaction not committed.');
-        if (transactionResult.error != null) {
-      print(transactionResult.error.message);}
-      }
-  }
   String votecount;
 
   @override
